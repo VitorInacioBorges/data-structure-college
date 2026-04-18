@@ -1,15 +1,7 @@
 #include <iostream>
+#include "../utils/node.h";
 
 using namespace std;
-
-// Node is the conjunction of memory adresses that
-// indicate a value followed by a pointer that points
-// to another node. The last node's pointer is NULL.
-
-struct node {
-    int value;
-    struct node *next;
-};
 
 // The first node is firstly initiated as NULL.
 // Its the node that indicates the start of the data structure.
@@ -32,7 +24,7 @@ void push (int value) {
 
     // "->" indicates the newNode memory address. With this
     // we can modify it's values.
-    newNode -> value = value;
+    newNode -> data = value;
 
     // Makes the pointer of the newNode point to where pile was pointing
     // and "pile" struct's pointer point to the newNode memory address.
@@ -70,7 +62,7 @@ void top () {
         return;
     }
 
-    cout << "In top is the element" << (pile -> value);
+    cout << "In top is the element" << (pile -> data);
 }
 
 void print () {
