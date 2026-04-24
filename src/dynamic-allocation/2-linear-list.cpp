@@ -17,7 +17,7 @@ bool empty() {
 
 
 // inserts a new element to the list
-void insertList(int value, int position) {
+void insertListPosition(int value, int position) {
     // creates pointers to current node and the newNode to be added
     struct node *current, *newNode;
 
@@ -48,6 +48,45 @@ void insertList(int value, int position) {
         newNode -> next = current -> next;
         // assigns current pointer to newNode
         current -> next = newNode;
+    }
+
+    // increases list size
+    listSize++;
+}
+
+void insertListValue(int value) {
+    struct node *current, *previous, *newNode;
+
+    // creates a new node and assigns It to 'newNode'
+    newNode = new(struct node);
+    newNode -> data = value;
+
+    // current points to the beggining of the list and goes through the entire list until it finds a value that is over the value parameter
+    current = list;
+
+    // while it is not the end of the list AND the value parameter is bigger than the current value
+    while(current != NULL && value > current -> data) {
+        // previous points to current
+        previous = current;
+
+        // current gives a step forward
+        current = current -> next;
+    }
+
+    if(current == list){
+        // newNode points to where list is pointing
+        newNode -> next = list;
+
+        // list points to where newNode is pointing
+        list -> next = newNode;
+    } else {
+        // newNode points to current
+        newNode -> next = current;
+
+        // previous points to newNode
+        previous -> next = newNode;
+
+        // newNode is inserted in the middle of both values
     }
 
     // increases list size
@@ -120,13 +159,13 @@ void printList() {
 }
 
 
-// main method for testing
+// main method for testing and compilation
 int main() {
-    insertList(5, 0);
-    insertList(7, 1);
-    insertList(52, 2);
-    insertList(3, 3);
-    insertList(4, 4);
+    insertListPosition(5, 0);
+    insertListPosition(7, 1);
+    insertListPosition(52, 2);
+    insertListPosition(3, 3);
+    insertListPosition(4, 4);
     removeList(0);
     removeList(3);
     printList();
