@@ -216,14 +216,15 @@ sudo apt install build-essential
 ### 🔹 Generic Compilation:
 
 ```bash
-g++ file.cpp -o program
+g++ file.cpp -o ../../build/programName
 ./program
 ```
 
 ### 🔹 Compilation Example:
 
 ```bash
-g++ piles.cpp -o piles
+# on ./src/dynamic-allocation
+g++ 1-piles.cpp -o ../../build/piles
 ./piles
 ```
 
