@@ -25,7 +25,7 @@
     All operations performed must generate a
     message confirming whether the operation was carried out or whether a problem occurred.
      
-    It is not necessary to include any menu.
+    It is not necessary to include any menu.1
 */
 
 // Lista Vetor
@@ -49,8 +49,18 @@ bool cheia() {
 }
 
 bool posicaoValida(int posicao) {
-    if(posicao > TAM || posicao > tamanho || posicao < 0) return false;
-    else return true;
+    if(posicao >= 0 && posicao < tamanho) return true;
+    else return false;
+}
+
+bool valorExiste(int valor) {
+    for(int i = 0; i < tamanho; i++) {
+        if(lista[i] == valor) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void insereLista(int valor) {
@@ -58,6 +68,11 @@ void insereLista(int valor) {
 
     if(cheia()) {
         cout << "Lista esta cheia";
+        return;
+    }
+
+    if(valorExiste(valor)) {
+        cout << "Elemento ja existe na lista!\n";
         return;
     }
 
@@ -80,11 +95,47 @@ void recuperaLista(int posicao) {
 }
 
 void removeLista(int posicao) {
-    
+    if(vazia()) {
+        cout << "Lista esta vazia!\n";
+        return;
+    }
+
+    if(!posicaoValida(posicao)) {
+        cout << "Posicao nao é válida!\n";
+        return;
+    }
+
+    for(int i = posicao; i < tamanho - 1; i++) {
+        lista[i] = lista[i + 1];
+    }
+
+    tamanho--;
+    cout << "Elemento removido!\n";
 }
 
-void buscaLista(int posicao) {
+void buscaLista(int valor) {
+    if(vazia()) {
+        cout << "Lista esta vazia!\n";
+        return;
+    }
 
+    int encontrado = 0;
+    int posicao = 0;
+
+    // nao verifica pra caso exista mais de um mesmo elemento na lista. so ve o primeiro q acha
+    for(int i = 0; i < tamanho; i++) {
+        if(lista[i] == valor) {
+            encontrado++;
+            posicao = i;
+            break;
+        }
+    }
+
+    if(encontrado) {
+        cout << "Elemento " << valor << " encontrado na posicao " << posicao << " do vetor!\n";
+    } else {
+        cout << "Elemento nao encontrado!";
+    }
 }
 
 void imprime() {
@@ -93,7 +144,7 @@ void imprime() {
         return;
     }
     
-    for(int i = 0; i <= tamanho; i++) {
+    for(int i = 0; i < tamanho; i++) {
         cout << "Posicao: " << i << " / Elemento: " << lista[i] << "\n";
     }
 }

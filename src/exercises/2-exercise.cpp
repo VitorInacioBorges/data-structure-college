@@ -28,24 +28,154 @@
     It is not necessary to include any menu.
 */
 
-// Lista Vetor
+// Lista Ponteiro
+
+#include <iostream>
+
+using namespace std;
+
+struct node {
+    int elemento;
+    struct node *prox;
+};
+
+struct node *lista = NULL;
+int tamanho = 0;
+
+bool vazia() {
+    if(lista == NULL) return true;
+    else return false;
+}
+
+bool posicaoValida(int posicao) {
+    if(posicao >= 0 && posicao < tamanho) return true;
+    else return false;
+}
+
+bool valorExiste(int valor) {
+    struct node *atual;
+
+    atual = lista;
+
+    while (atual != NULL) {
+        if((atual -> elemento) == valor) {
+            return true;
+        } 
+
+        atual = atual -> prox;
+    }
+
+    return false;
+}
 
 void insereLista(int valor) {
+    struct node *atual, *anterior, *novo;
 
+    novo = new(struct node);
+    novo -> elemento = valor;
+
+    atual = lista;
+
+    while(atual != NULL && valor > atual -> elemento) {
+        anterior = atual;
+        atual = atual -> prox;
+    }
+
+    if(atual == lista) {
+        novo -> prox = lista;
+        lista -> prox = novo;
+        return;
+    }
+
+    novo -> prox = atual;
+    anterior -> prox = novo;
+
+    tamanho++;
 }
 
 void recuperaLista(int posicao) {
-    
+    struct node *atual;
+
+    if(!posicaoValida(posicao)) {
+        cout << "Posicao não é válida!\n";
+        return;
+    }
+
+    atual = lista;
+    int i = 0;
+
+    while (atual != NULL && i < posicao) {
+        atual = atual -> prox;
+        i++;
+    }
+
+    cout << "Posicao: " << posicao << "/ Elemento: " << atual -> elemento << "\n";
 }
 
 void removeLista(int posicao) {
+    struct node *atual, *apagado;
 
+    if(!posicaoValida(posicao)) {
+        cout << "Posicao não é válida!\n";
+        return;
+    }
+
+    if(posicao == 0) {
+        apagado = lista;
+        lista = lista -> prox;
+        return;
+    }
+
+    atual = lista;
+
+    for(int i = 0; i < posicao - 1; i++) {
+        atual = atual -> prox;
+    }
+
+    apagado = atual -> prox;
+    atual -> prox = apagado -> prox;
+
+    tamanho--;
+    delete(apagado);
 }
 
-void buscaLista(int posicao) {
+void buscaLista(int valor) {
+    struct node *atual;
 
+    atual = lista;
+
+    int encontrado = 0;
+    int posicao = 0;
+
+    while (atual != NULL) {
+        if((atual -> elemento) == valor) {
+            encontrado++;
+            break; 
+        }
+
+        posicao++;
+        atual = atual -> prox;
+    }
+
+    if(encontrado) {
+        cout << "Elemento " << valor << " encontrado na posicao " << posicao << " do vetor!\n";
+    } else {
+        cout << "Elemento nao encontrado!";
+    }
 }
 
 void imprime() {
+    struct node *atual;
 
+    if(vazia()) {
+        cout << "Lista esta vazia!\n";
+        return;
+    }
+
+    atual = lista;
+    
+    while(atual != NULL) {
+        cout << "Elemento: " << atual -> elemento << "\n";
+        atual = atual -> prox;
+    }
 }
