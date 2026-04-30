@@ -37,12 +37,26 @@ void printVetList(int vet[], int size) {
 }
 
 // pointer list definition
-struct node *lista = NULL;
+struct node *pointerList = NULL;
 int listSize = 0;
 
 // procedure that orders a pointer based list using insertion-sort
 void insertionSortPointerList() {
+    // 3 variables just like the vector version
+    struct node *current, *previous, *element;
+    
+    // current starts at the second element
+    current = pointerList -> next;
 
+    // if the list is empty return;
+    if(list == NULL) {
+        cout << "List is empty...";
+        return;
+    }
+
+    for(int i = 1; i <= listSize; i++) {
+        
+    }
 }
 
 // procedure that prints a pointer based list
