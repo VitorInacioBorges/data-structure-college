@@ -28,34 +28,34 @@
     It is not necessary to include any menu.1
 */
 
-// Lista Vetor
+// Vector List
 
 #include <iostream>
 
 using namespace std;
 
-const int TAM = 20;
-int lista[TAM];
-int tamanho = 0;
+const int SIZE = 20;
+int list[SIZE];
+int listSize = 0;
 
-bool vazia() {
-    if(tamanho == 0) return true;
+bool isEmpty() {
+    if(listSize == 0) return true;
     else return false;
 }
 
-bool cheia() {
-    if(tamanho == TAM) return true;
+bool isFull() {
+    if(listSize == SIZE) return true;
     else return false;
 }
 
-bool posicaoValida(int posicao) {
-    if(posicao >= 0 && posicao < tamanho) return true;
+bool isValidPosition(int position) {
+    if(position >= 0 && position < listSize) return true;
     else return false;
 }
 
-bool valorExiste(int valor) {
-    for(int i = 0; i < tamanho; i++) {
-        if(lista[i] == valor) {
+bool valueExists(int value) {
+    for(int i = 0; i < listSize; i++) {
+        if(list[i] == value) {
             return true;
         }
     }
@@ -63,88 +63,88 @@ bool valorExiste(int valor) {
     return false;
 }
 
-void insereLista(int valor) {
+void insertList(int value) {
     int i;
 
-    if(cheia()) {
-        cout << "Lista esta cheia";
+    if(isFull()) {
+        cout << "List is full";
         return;
     }
 
-    if(valorExiste(valor)) {
-        cout << "Elemento ja existe na lista!\n";
+    if(valueExists(value)) {
+        cout << "Element already exists in the list!\n";
         return;
     }
 
-    for(i = tamanho; i > 0 && valor < lista[i - 1]; i--) {
-        lista[i] = lista[i - 1];
+    for(i = listSize; i > 0 && value < list[i - 1]; i--) {
+        list[i] = list[i - 1];
     }
 
-    lista[i] = valor;
-    tamanho++;
-    cout << "Elemento inserido!\n";
+    list[i] = value;
+    listSize++;
+    cout << "Element inserted!\n";
 }
 
-void recuperaLista(int posicao) {
-    if(!posicaoValida(posicao)) {
-        cout << "Posicao nao é válida!\n";
+void retrieveList(int position) {
+    if(!isValidPosition(position)) {
+        cout << "Position is not valid!\n";
         return;
     }
 
-    cout << "Posicao: " << posicao << "/ Elemento: " << lista[posicao] << "\n";
+    cout << "Position: " << position << " / Element: " << list[position] << "\n";
 }
 
-void removeLista(int posicao) {
-    if(vazia()) {
-        cout << "Lista esta vazia!\n";
+void removeList(int position) {
+    if(isEmpty()) {
+        cout << "List empty\n";
         return;
     }
 
-    if(!posicaoValida(posicao)) {
-        cout << "Posicao nao é válida!\n";
+    if(!isValidPosition(position)) {
+        cout << "Position is not valid!\n";
         return;
     }
 
-    for(int i = posicao; i < tamanho - 1; i++) {
-        lista[i] = lista[i + 1];
+    for(int i = position; i < listSize - 1; i++) {
+        list[i] = list[i + 1];
     }
 
-    tamanho--;
-    cout << "Elemento removido!\n";
+    listSize--;
+    cout << "Element removed!\n";
 }
 
-void buscaLista(int valor) {
-    if(vazia()) {
-        cout << "Lista esta vazia!\n";
+void fetchList(int value) {
+    if(isEmpty()) {
+        cout << "List empty\n";
         return;
     }
 
-    int encontrado = 0;
-    int posicao = 0;
+    int found = 0;
+    int position = 0;
 
-    // nao verifica pra caso exista mais de um mesmo elemento na lista. so ve o primeiro q acha
-    for(int i = 0; i < tamanho; i++) {
-        if(lista[i] == valor) {
-            encontrado++;
-            posicao = i;
+    // doesn't check if there's more than one same element in the list. only sees the first it finds
+    for(int i = 0; i < listSize; i++) {
+        if(list[i] == value) {
+            found++;
+            position = i;
             break;
         }
     }
 
-    if(encontrado) {
-        cout << "Elemento " << valor << " encontrado na posicao " << posicao << " do vetor!\n";
+    if(found) {
+        cout << "Element " << value << " found at position " << position << " of the vector!\n";
     } else {
-        cout << "Elemento nao encontrado!";
+        cout << "Value not found!";
     }
 }
 
-void imprime() {
-    if(vazia()) {
-        cout << "Lista esta vazia!\n";
+void print() {
+    if(isEmpty()) {
+        cout << "List empty\n";
         return;
     }
     
-    for(int i = 0; i < tamanho; i++) {
-        cout << "Posicao: " << i << " / Elemento: " << lista[i] << "\n";
+    for(int i = 0; i < listSize; i++) {
+        cout << "Position: " << i << " / Element: " << list[i] << "\n";
     }
 }

@@ -28,154 +28,149 @@
     It is not necessary to include any menu.
 */
 
-// Lista Ponteiro
+// Pointer List
 
 #include <iostream>
-
+#include "../utils/node.h"
 using namespace std;
 
-struct node {
-    int elemento;
-    struct node *prox;
-};
+struct node *list = NULL;
+int listSize = 0;
 
-struct node *lista = NULL;
-int tamanho = 0;
-
-bool vazia() {
-    if(lista == NULL) return true;
+bool isEmpty() {
+    if(list == NULL) return true;
     else return false;
 }
 
-bool posicaoValida(int posicao) {
-    if(posicao >= 0 && posicao < tamanho) return true;
+bool isValidPosition(int position) {
+    if(position >= 0 && position < listSize) return true;
     else return false;
 }
 
-bool valorExiste(int valor) {
-    struct node *atual;
+bool valueExists(int value) {
+    struct node *current;
 
-    atual = lista;
+    current = list;
 
-    while (atual != NULL) {
-        if((atual -> elemento) == valor) {
+    while (current != NULL) {
+        if((current -> element) == value) {
             return true;
         } 
 
-        atual = atual -> prox;
+        current = current -> next;
     }
 
     return false;
 }
 
-void insereLista(int valor) {
-    struct node *atual, *anterior, *novo;
+void insertList(int value) {
+    struct node *current, *previous, *newNode;
 
-    novo = new(struct node);
-    novo -> elemento = valor;
+    newNode = new(struct node);
+    newNode -> element = value;
 
-    atual = lista;
+    current = list;
 
-    while(atual != NULL && valor > atual -> elemento) {
-        anterior = atual;
-        atual = atual -> prox;
+    while(current != NULL && value > current -> element) {
+        previous = current;
+        current = current -> next;
     }
 
-    if(atual == lista) {
-        novo -> prox = lista;
-        lista -> prox = novo;
+    if(current == list) {
+        newNode -> next = list;
+        list -> next = newNode;
         return;
     }
 
-    novo -> prox = atual;
-    anterior -> prox = novo;
+    newNode -> next = current;
+    previous -> next = newNode;
 
-    tamanho++;
+    listSize++;
 }
 
-void recuperaLista(int posicao) {
-    struct node *atual;
+void retrieveList(int position) {
+    struct node *current;
 
-    if(!posicaoValida(posicao)) {
-        cout << "Posicao não é válida!\n";
+    if(isEmpty()) {
+        cout << "List empty\n";
         return;
     }
 
-    atual = lista;
-    int i = 0;
-
-    while (atual != NULL && i < posicao) {
-        atual = atual -> prox;
-        i++;
+    if(!isValidPosition(position)) {
+        cout << "Position is not valid!\n";
+        return;
     }
 
-    cout << "Posicao: " << posicao << "/ Elemento: " << atual -> elemento << "\n";
+    current = list;
+
+    for(int i = 0; i < position; i++) {
+        current = current -> next;
+    }
+
+    cout << "Position: " << position << " / Element: " << current -> element << "\n";
 }
 
-void removeLista(int posicao) {
-    struct node *atual, *apagado;
+void removeList(int position) {
+    struct node *current, *deletedNode;
 
-    if(!posicaoValida(posicao)) {
-        cout << "Posicao não é válida!\n";
+    if(!isValidPosition(position)) {
+        cout << "Position is not valid!\n";
         return;
     }
 
-    if(posicao == 0) {
-        apagado = lista;
-        lista = lista -> prox;
+    if(position == 0) {
+        deletedNode = list;
+        list = list -> next;
         return;
     }
 
-    atual = lista;
+    current = list;
 
-    for(int i = 0; i < posicao - 1; i++) {
-        atual = atual -> prox;
+    for(int i = 0; i < position - 1; i++) {
+        current = current -> next;
     }
 
-    apagado = atual -> prox;
-    atual -> prox = apagado -> prox;
+    deletedNode = current -> next;
+    current -> next = deletedNode -> next;
 
-    tamanho--;
-    delete(apagado);
+    listSize--;
+    delete(deletedNode);
 }
 
-void buscaLista(int valor) {
-    struct node *atual;
+void fetchList(int value) {
+    if(isEmpty()) {
+        cout << "List empty\n";
+        return;
+    }
 
-    atual = lista;
+    struct node *current = list;
+    int position = 0;
 
-    int encontrado = 0;
-    int posicao = 0;
-
-    while (atual != NULL) {
-        if((atual -> elemento) == valor) {
-            encontrado++;
-            break; 
+    while(current != NULL) {
+        if(current -> element == value) {
+            cout << "Element " << value << " found at position " << position << " of the list!\n";
+            return;
         }
 
-        posicao++;
-        atual = atual -> prox;
+        position++;
+        current = current -> next;
     }
 
-    if(encontrado) {
-        cout << "Elemento " << valor << " encontrado na posicao " << posicao << " do vetor!\n";
-    } else {
-        cout << "Elemento nao encontrado!";
-    }
+    cout << "Value not found!\n";
 }
 
-void imprime() {
-    struct node *atual;
+void print() {
+    struct node *current;
 
-    if(vazia()) {
-        cout << "Lista esta vazia!\n";
+    if(isEmpty()) {
+        cout << "List empty\n";
         return;
     }
 
-    atual = lista;
+    current = list;
     
-    while(atual != NULL) {
-        cout << "Elemento: " << atual -> elemento << "\n";
-        atual = atual -> prox;
+    while(current != NULL) {
+        cout << "Element: " << current -> element << "\n";
+        current = current -> next;
     }
 }
