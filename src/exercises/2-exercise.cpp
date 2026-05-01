@@ -53,7 +53,7 @@ bool valueExists(int value) {
     current = list;
 
     while (current != NULL) {
-        if((current -> element) == value) {
+        if((current -> data) == value) {
             return true;
         } 
 
@@ -64,28 +64,33 @@ bool valueExists(int value) {
 }
 
 void insertList(int value) {
-    struct node *current, *previous, *newNode;
+    if(valueExists(value)) {
+        cout << "Element already exists in the list!\n";
+        return;
+    }
 
-    newNode = new(struct node);
-    newNode -> element = value;
+    struct node *current = list;
+    struct node *previous = NULL;
+    struct node *newNode = new struct node;
 
-    current = list;
+    newNode -> data = value;
+    newNode -> next = NULL;
 
-    while(current != NULL && value > current -> element) {
+    while(current != NULL && value > current -> data) {
         previous = current;
         current = current -> next;
     }
 
-    if(current == list) {
+    if(previous == NULL) {
         newNode -> next = list;
-        list -> next = newNode;
-        return;
+        list = newNode;
+    } else {
+        newNode -> next = current;
+        previous -> next = newNode;
     }
 
-    newNode -> next = current;
-    previous -> next = newNode;
-
     listSize++;
+    cout << "Element inserted!\n";
 }
 
 void retrieveList(int position) {
@@ -107,34 +112,40 @@ void retrieveList(int position) {
         current = current -> next;
     }
 
-    cout << "Position: " << position << " / Element: " << current -> element << "\n";
+    cout << "Position: " << position << " / Element: " << current -> data << "\n";
 }
 
 void removeList(int position) {
-    struct node *current, *deletedNode;
+    if(isEmpty()) {
+        cout << "List empty\n";
+        return;
+    }
 
     if(!isValidPosition(position)) {
         cout << "Position is not valid!\n";
         return;
     }
 
+    struct node *deletedNode;
+
     if(position == 0) {
         deletedNode = list;
         list = list -> next;
-        return;
+    } else {
+        struct node *current = list;
+
+        for(int i = 0; i < position - 1; i++) {
+            current = current -> next;
+        }
+
+        deletedNode = current -> next;
+        current -> next = deletedNode -> next;
     }
 
-    current = list;
-
-    for(int i = 0; i < position - 1; i++) {
-        current = current -> next;
-    }
-
-    deletedNode = current -> next;
-    current -> next = deletedNode -> next;
-
+    delete deletedNode;
     listSize--;
-    delete(deletedNode);
+
+    cout << "Element removed!\n";
 }
 
 void fetchList(int value) {
@@ -147,7 +158,7 @@ void fetchList(int value) {
     int position = 0;
 
     while(current != NULL) {
-        if(current -> element == value) {
+        if(current -> data == value) {
             cout << "Element " << value << " found at position " << position << " of the list!\n";
             return;
         }
@@ -170,7 +181,7 @@ void print() {
     current = list;
     
     while(current != NULL) {
-        cout << "Element: " << current -> element << "\n";
+        cout << "Element: " << current -> data << "\n";
         current = current -> next;
     }
 }
