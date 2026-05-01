@@ -67,7 +67,7 @@ data-structure-college/
 
 ### 🔹 Ambiente e instalacoes recomendadas:
 
-- Sistema Operacional: **Linux (Ubuntu)**
+- Sistema Operacional: **Linux (Ubuntu)** ou **Windows (WSL)**
 - Editor / IDE: **Visual Studio Code**
 - Extensões recomendadas:
   - **C/C++ (Microsoft)**
@@ -195,7 +195,7 @@ data-structure-college/
 
 ### 🔹 Recommended Environment and Installations:
 
-- Operating System: **Linux (Ubuntu)**
+- Operating System: **Linux (Ubuntu)** or **Windows (WSL)**
 - Editor / IDE: **Visual Studio Code**
 - Recommended extensions:
   - **C/C++ (Microsoft)**
