@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../utils/node.h";
+#include "../utils/node.h"
 
 // this ordering algorithm will be executed especifically on
 // the linear list data structure, both on vector and pointer based lists
@@ -10,7 +10,7 @@ using namespace std;
 const int TAM = 10;
 int list[TAM] = {5, 21, 4, 16, 10, 33, 9, 8, 98, 34};
 
-// procedure that orders a vector based list using insertion-sort
+// procedure that orders a vector based list using insertion sort
 void insertionSortVectorList(int vet[], int size) {
     // defines current vector location for current element to be sorted and stars the loop
     for(int current = 1; current < size; current++) {
@@ -42,38 +42,112 @@ void printVetList(int vet[], int size) {
 struct node *pointerList = NULL;
 int listSize = 0;
 
-// boolean function that tells if the value is already inserted
-bool valueExists() {
+bool isEmpty() {
+    if(pointerList == NULL) return true;
+    else return false;
+}
 
+// boolean function that tells if the value is already inserted
+bool valueExists(int value) {
+    // defines the pointer that points to current node
+    struct node *current;
+
+    // defines current as the first node
+    current = pointerList;
+
+    // while current point to something
+    while (current != NULL) {
+        // and the element is not equal to the value specified
+        if((current -> data) == value) {
+            return true;
+        } 
+
+        // continue to the next
+        current = current -> next;
+    }
+
+    return false;
 }
 
 // procedure that adds a value to the list
+// not adding the value in order by purpose so we can try the algorithm
 void insertValuePointerList(int value) {
+    if(valueExists(value)) {
+        cout << "Element already exists in the list!\n";
+        return;
+    }
 
+    struct node *current = pointerList;
+    struct node *previous = NULL;
+    struct node *newNode = new struct node;
+
+    newNode -> data = value;
+    newNode -> next = NULL;
+
+    while(current != NULL) {
+        previous = current;
+        current = current -> next;
+    }
+
+    if(previous == NULL) {
+        newNode -> next = pointerList;
+        pointerList = newNode;
+    } else {
+        newNode -> next = current;
+        previous -> next = newNode;
+    } 
+
+    listSize++;
 }
 
-// procedure that orders a pointer based list using insertion-sort
+// procedure that orders a pointer based list using insertion sort
 void insertionSortPointerList() {
-    // 3 variables just like the vector version
-    struct node *current, *previous, *element;
-    
-    // current starts at the second element
-    current = pointerList -> next;
-
     // if the list is empty return;
-    if(list == NULL) {
+    if(isEmpty()) {
         cout << "List is empty...";
         return;
     }
 
-    for(int i = 1; i <= listSize; i++) {
-        
+    struct node *sorted = NULL;
+    struct node *current = pointerList;
+
+    while(current != NULL) {
+        struct node *element = current;
+        current = current -> next;
+
+        if(sorted == NULL || element -> data < sorted -> data) {
+            element -> next = sorted;
+            sorted = element;
+        } else {
+            struct node *previous = sorted;
+
+            while(previous -> next != NULL && previous -> next -> data < element -> data) {
+                previous = previous -> next;
+            }
+
+            element -> next = previous -> next;
+            previous -> next = element;
+        }
     }
+
+    pointerList = sorted;
 }
 
 // procedure that prints a pointer based list
 void printPointerList() {
+    struct node *current;
 
+    if(isEmpty()) {
+        cout << "List empty\n";
+        return;
+    }
+
+    current = pointerList;
+    
+    while(current != NULL) {
+        cout << "Element: " << current -> data << "\n";
+        current = current -> next;
+    }
 }
 
 int main() {
@@ -83,4 +157,21 @@ int main() {
     cout << "\nVector List Ordered: \n";
     insertionSortVectorList(list, TAM);
     printVetList(list, TAM);
+
+    insertValuePointerList(1);
+    insertValuePointerList(56);
+    insertValuePointerList(12);
+    insertValuePointerList(21);
+    insertValuePointerList(26);
+    insertValuePointerList(47);
+    insertValuePointerList(11);
+    insertValuePointerList(9);
+    insertValuePointerList(8);
+
+    cout << "\nPointer List Disordered: \n";
+    printPointerList();
+
+    cout << "\nPointer List Ordered: \n";
+    insertionSortPointerList();
+    printPointerList();
 }
