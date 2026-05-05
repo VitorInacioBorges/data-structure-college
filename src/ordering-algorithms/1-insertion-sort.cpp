@@ -36,9 +36,21 @@ void printVetList(int vet[], int size) {
     }
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------- */
+
 // pointer list definition
 struct node *pointerList = NULL;
 int listSize = 0;
+
+// boolean function that tells if the value is already inserted
+bool valueExists() {
+
+}
+
+// procedure that adds a value to the list
+void insertValuePointerList(int value) {
+
+}
 
 // procedure that orders a pointer based list using insertion-sort
 void insertionSortPointerList() {
@@ -65,6 +77,10 @@ void printPointerList() {
 }
 
 int main() {
+    cout << "Vector List Disordered: \n";
+    printVetList(list, TAM);
+
+    cout << "\nVector List Ordered: \n";
     insertionSortVectorList(list, TAM);
     printVetList(list, TAM);
 }
